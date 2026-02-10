@@ -25,6 +25,35 @@ Candidate-assessment/
         └── shared/              # Reusable components
 ```
 
+## Railway Deployment
+
+This application is configured for one-click deployment on Railway.
+
+### Deploy to Railway
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/YOUR_TEMPLATE_URL)
+
+Or manually:
+1. Fork this repository
+2. Create a new project in Railway
+3. Add a PostgreSQL database service
+4. Deploy from GitHub repository
+5. Railway will automatically detect the `nixpacks.toml` configuration
+
+### Environment Variables
+
+The following environment variables are automatically configured:
+- `DATABASE_URL` - PostgreSQL connection (auto-set by Railway PostgreSQL plugin)
+- `ASPNETCORE_ENVIRONMENT` - Set to "Production"
+- `ASPNETCORE_URLS` - Set to "http://0.0.0.0:8080"
+
+### Deployment Architecture
+
+- **Single Service**: Both .NET API and Angular UI run together
+- **Backend**: Serves API at `/api/*` endpoints
+- **Frontend**: Static files served from wwwroot, fallback to index.html for SPA routes
+- **Database**: PostgreSQL with automatic connection string parsing from DATABASE_URL
+
 ## Getting Started
 
 ### Prerequisites
