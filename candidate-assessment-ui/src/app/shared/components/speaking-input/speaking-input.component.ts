@@ -42,7 +42,7 @@ import { CommonModule } from '@angular/common';
         </div>
         <div class="progress-labels">
           <span class="min-label" [class.achieved]="recordingTime >= minDuration">
-            {{ recordingTime >= minDuration ? '✓ Min 1:00 reached' : 'Min 1:00 required' }}
+             {{ recordingTime >= minDuration ? '✓ Min 0:30 reached' : 'Min 0:30 required' }}
           </span>
           <span class="max-label">Max {{ formatTime(maxDuration) }}</span>
         </div>
@@ -82,7 +82,7 @@ import { CommonModule } from '@angular/common';
       
       <!-- Minimum time warning -->
       <p *ngIf="showMinTimeWarning && !isRecording && !audioUrl" class="info-message">
-        ℹ️ Please speak for at least 1 minute for accurate assessment
+        ℹ️ Please speak for at least 30 seconds for accurate assessment
       </p>
       
       <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
@@ -394,8 +394,8 @@ import { CommonModule } from '@angular/common';
 })
 export class SpeakingInputComponent implements OnDestroy {
   @Input() disabled: boolean = false;
-  @Input() maxDuration: number = 120; // Max recording time in seconds
-  @Input() minDuration: number = 60;  // Minimum recommended time (1 minute)
+  @Input() maxDuration: number = 60; // Max recording time in seconds (1 minute)
+  @Input() minDuration: number = 30;  // Minimum recommended time (30 seconds)
   @Input() countdownSeconds: number = 3; // Countdown before recording starts
   @Output() audioRecorded = new EventEmitter<Blob | undefined>();
 
