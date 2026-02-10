@@ -1,0 +1,25 @@
+# Nixpacks configuration for Railway deployment
+# This builds both .NET backend and Angular frontend
+
+[phases.setup]
+nixPkgs = ["dotnet-sdk_8", "nodejs_18"]
+
+[phases.build]
+cmds = [
+  # Build .NET Backend
+  "cd CandidateAssessment.API && dotnet restore",
+  "cd CandidateAssessment.API && dotnet publish -c Release -o ../publish",
+  # Build Angular Frontend
+  "cd candidate-assessment-ui && npm install",
+  "cd candidate-assessment-ui && npm run build",
+  # Copy frontend to backend wwwroot
+  "mkdir -p publish/wwwroot",
+  "cp -r candidate-assessment-ui/dist/candidate-assessment-ui/* publish/wwwroot/ 2>/dev/null || echo 'No dist folder yet'"
+]
+
+[start]
+cmd = "dotnet publish/CandidateAssessment.API.dll"
+
+[variables]
+ASPNETCORE_ENVIRONMENT = "Production"
+ASPNETCORE_URLS = "http://0.0.0.0:8080"
